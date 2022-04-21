@@ -359,10 +359,10 @@ export class TextureCanvas extends Texture {
     constructor(size: number | { width: number, height: number }, scene: Nullable<Scene>, initTexture?: Texture, onReady?: Function, options: { generateMipMaps?: boolean, samplingMode?: number } = {}, name?: string) {
         super(null, scene, !options.generateMipMaps, false, options.samplingMode);
         this._engine = scene.getEngine();
-        let shaders = { vertex: 'textureCanvas', fragment: 'textureCanvas' };
+        let shaders = 'textureCanvas';
         this._effect = this._engine.createEffect(shaders, [VertexBuffer.PositionKind], ['rotationMatrix', 'pivotPoint', 'translation', 'scaling', 'skewing', 'diffuseSamplingRect', 'opacitySamplingRect', 'opacityTextureIntensity'], ['diffuseSampler', 'opacitySampler', 'backgroundSampler']);
         this._size = size;
-        this._texture = this._engine.createRenderTargetTexture(size, false);
+        this._texture = this._engine.createRenderTargetTexture(size, false).texture;
         this._backBuffer = new Texture(null, scene, !options.generateMipMaps, false, options.samplingMode);
         this._backBuffer._texture = this._engine.createRenderTargetTexture(size, false);
         if (name) {
@@ -390,6 +390,7 @@ export class TextureCanvas extends Texture {
         this.clear();
 
         this._effect.executeWhenCompiled(() => {
+            this._effect._prepareEffect()
             if (initTexture) {
                 if (initTexture.isReady()) {
                     this.drawTexture(initTexture);

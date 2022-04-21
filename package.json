@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/Poolminer/BabylonTextureCanvas#readme",
   "devDependencies": {
-    "@babylonjs/core": "^4.0.0-alpha.18"
+    "@babylonjs/core": "^5.0.3"
   },
   "dependencies": {}
 }
